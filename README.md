@@ -44,12 +44,12 @@
 - Implemented in STK “Complex Receiver Model” to mimic the datasheet chain.
 
 <p align="center">
-  <img src="media/rx_ann-mb_setup.png" width="95%"/><br/>
+  <img src="Media/rx_ann-mb_setup.png" width="95%"/><br/>
   <em>Receiver noise / gain chain implemented to mimic u-blox ANN-MB</em>
 </p>
 
 <p align="center">
-  <img src="media/ublox_annmb_specs.png" width="95%"/><br/>
+  <img src="Media/ublox_annmb_specs.png" width="95%"/><br/>
   <em>Excerpted ANN-MB element & amplifier specifications</em>
 </p>
 
