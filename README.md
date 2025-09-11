@@ -27,15 +27,6 @@
 **Constellations**
 - GPS IIR / IIR-M / IIF / III satellites imported from live ephemeris **.txt** and grouped by block; propagated over the test window.
 
-<p align="center">
-  <img src="media/setup_import.png" width="95%" /><br/>
-  <em>Importing satellites from live ephemeris (.txt)</em>
-</p>
-
-<p align="center">
-  <img src="media/setup_sorting.png" width="95%" /><br/>
-  <em>Sorting satellites by SVN / block</em>
-</p>
 
 <p align="center">
   <img src="media/constellations.png" width="95%" /><br/>
