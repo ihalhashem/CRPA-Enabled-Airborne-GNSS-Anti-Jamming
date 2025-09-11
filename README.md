@@ -30,7 +30,7 @@
 
 <p align="center">
   <img src="Media/constellations.png" width="95%" /><br/>
-  <em>Resulting orbital planes around Earth</em>
+  <em>Resulting orbital planes around Earth and a sample satellite</em>
 </p>
 
 <a id="rx-sec"></a>
