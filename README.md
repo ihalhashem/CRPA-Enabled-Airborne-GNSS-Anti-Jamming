@@ -1,2 +1,3 @@
 # CRPA-Enabled-Airborne-GNSS-Anti-Jamming
-STK + Python/MATLAB analysis of a commercial airliner GNSS anti-jamming with CRPA. Outputs: Navigation accuracy map, C/N density, CRPA vs FRPA baseline, acquisition/tracking-loss distance estimator, and scenario scripts. 
+## Introduction
+<p align="justify">Concise library of single-element antennas—dipole, monopole, microstrip patch variants, horns, reflectors—optimised until simulated gain, S11 and pattern metrics are comparable to typical commercial data-sheet values.</p>
