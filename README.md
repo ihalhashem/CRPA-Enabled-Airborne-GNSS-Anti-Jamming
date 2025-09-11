@@ -2,166 +2,185 @@
 
 ## Introduction
 <p align="justify">
-Airborne GNSS robustness study built in STK. A civil airliner flies a low-altitude (10 kft MSL) route over Abu Dhabi while a commercial rooftop jammer radiates at GPS L1. I compare a conventional single-element FRPA against a compact 2-element CRPA (MVDR beamformer) and quantify the effect on received C/N₀ and C/(N+I). The primary stress case uses a <b>20 W jammer with a 10 dBi panel</b>.
+<b>Airborne GNSS robustness study built in STK.</b> A civil airliner flies a low-altitude (10 kft MSL) route over <b>Abu Dhabi</b> while a commercial rooftop jammer on <b>Al Ain Tower</b> radiates at GPS L1. I compare a conventional single-element FRPA against a compact 2-element CRPA (MVDR beamformer) and quantify the effect on received <b>C/N₀</b> and <b>C/(N+I)</b>. The primary stress case uses a <b>20 W</b> jammer with a <b>10 dBi</b> panel.
 </p>
 
 ## Table&nbsp;of&nbsp;Contents
-* [Scenario](#scenario)
-* [FRPA Baseline](#frpa-baseline)
-* [CRPA Receiver](#crpa-receiver)
-* [Jammer & J/S Model](#jammer--js-model)
-* [Results](#results)
-* [How to Reproduce (STK)](#how-to-reproduce-stk)
-* [Assumptions & Notes](#assumptions--notes)
-* [Repository Structure](#repository-structure)
+* [Scenario Setup](#setup-sec)
+* [Receiver Models](#rx-sec)
+* [Jammer Models](#jam-sec)
+* [Flight Profile](#flight-sec)
+* [Data Products & Method](#method-sec)
+* [Results](#results-sec)
+  * [Navigation Accuracy (visual check)](#navacc-sec)
+  * [Median C/N₀ — FRPA, 5 W](#res-frpa-5w)
+  * [Median C/N₀ — CRPA, 5 W](#res-crpa-5w)
+  * [Median C/N₀ — FRPA, 20 W + 10 dBi panel](#res-frpa-stress)
+  * [Median C/N₀ — CRPA, 20 W + 10 dBi panel](#res-crpa-stress)
+* [How to Reproduce](#repro-sec)
+* [Repo Layout](#layout-sec)
+* [Notes & Assumptions](#notes-sec)
 
----
+<a id="setup-sec"></a>
+## Scenario Setup
 
-<a id="scenario"></a>
-## Scenario
+**Constellations**
+- GPS IIR / IIR-M / IIF / III satellites imported from live ephemeris **.txt** and grouped by block; propagated over the test window.
 
-### Overview
-<p align="justify">
-Aircraft at 10 kft MSL (landing/loiter representative) over a rectangular Area Target. Constellation is GPS L1 C/A (1.57542 GHz). Links are auto-selected by maximum elevation. The jammer sits on a rooftop inside the area.
+<p align="center">
+  <img src="media/setup_import.png" width="95%" /><br/>
+  <em>Importing satellites from live ephemeris (.txt)</em>
 </p>
 
-### Key Parameters
-
-| Item | Value |
-|---|---|
-| Frequency | 1.57542 GHz (GPS L1 C/A) |
-| Aircraft altitude | 10 kft MSL |
-| Duration | ~30 min around 09:00–09:30 UTC |
-| Link selection | Receive-constrained, Max Elevation |
-| Propagation | Free-space, light-time delay ON |
-| Metrics | Per-satellite C/N₀, C/(N+I), Rx gain, J/S vs. range |
-
-*(optional figure placeholders)*  
-`![Scenario](figs/scenario_overview.png)`  
-`![Route](figs/route_3d.png)`
-
----
-
-<a id="frpa-baseline"></a>
-## FRPA Baseline
-
-### Overview
-<p align="justify">
-Single-element RHCP patch on the aircraft (FRPA) used as the non-adaptive reference.
+<p align="center">
+  <img src="media/setup_sorting.png" width="95%" /><br/>
+  <em>Sorting satellites by SVN / block</em>
 </p>
 
-### Setup
-* Antenna: embedded RHCP patch (FRPA)
-* Nominal gain: 3–5 dBic (broad beam)
-* Polarization: RHCP
-* System noise temperature: 290 K
-
-*(optional)*  
-`![FRPA Median C/N0](figs/median_cn_frpa.png)`
-
----
-
-<a id="crpa-receiver"></a>
-## CRPA Receiver
-
-### Overview
-<p align="justify">
-Compact <b>4-element circular array</b> (0.5 λ spacing) with <b>MVDR</b> beamforming. The main lobe tracks the strongest satellite; an adaptive <b>null is steered at the jammer</b> (object-based null provider).
+<p align="center">
+  <img src="media/constellations.png" width="95%" /><br/>
+  <em>Resulting orbital planes around Earth</em>
 </p>
 
-### Array & Beamformer
-* Elements: 4 (circular), spacing = **0.5 λ**
-* Backlobe suppression: 20 dB
-* Beam Direction: **Automatic** (max-elevation satellite)
-* Null Direction: **Object → Jammer**, az/el limits ±90°
-* Beamformer: **MVDR**, constraint = **3 dB**
+<a id="rx-sec"></a>
+## Receiver Models
 
-*(optional)*  
-`![CRPA Gain vs Time](figs/rx_gain_crpa.png)`
+**FRPA (baseline) — u-blox ANN-MB active patch (L1)**
+- Element: RHCP patch, typ. **+3.5 dBic** zenith gain.
+- Integrated LNA chain: total gain ~**21.4 dB**, NF ~**2.8 dB**.
+- Cable insertion loss (RG-174, 5 m) ≈ **6.6 dB**.
+- System noise temps set to **290 K**; rain model enabled for 0.1% outage.
+- Implemented in STK “Complex Receiver Model” to mimic the datasheet chain.
 
----
-
-<a id="jammer--js-model"></a>
-## Jammer & J/S Model
-
-### Jammer (reference case)
-| Parameter | Value |
-|---|---|
-| Location | Rooftop inside Area Target |
-| Power | **20 W** (43 dBm) |
-| Antenna | **10 dBi panel** |
-| EIRP | **+53 dBm = +23 dBW** |
-| Polarization | Linear (defaults to STK dipole/panel), mismatch to RHCP included by STK |
-
-### J/S sanity line (free-space, co-pol)
-<p align="justify">
-I also plot a closed-form J/S vs. range curve to contextualize the STK results:
+<p align="center">
+  <img src="media/rx_ann-mb_setup.png" width="95%"/><br/>
+  <em>Receiver noise / gain chain implemented to mimic u-blox ANN-MB</em>
 </p>
 
-\[
-\mathrm{J/S\ (dB)} \approx \left(EIRP_\mathrm{jam}\;[\mathrm{dBW}] - L_\mathrm{fs}(R)\;[\mathrm{dB}]\right) - P_\mathrm{sig,iso}\;[\mathrm{dBW}]
-\]
+<p align="center">
+  <img src="media/ublox_annmb_specs.png" width="95%"/><br/>
+  <em>Excerpted ANN-MB element & amplifier specifications</em>
+</p>
 
-*Where \(L_\mathrm{fs}(R)=32.45+20\log_{10}(f_\mathrm{MHz})+20\log_{10}(R_\mathrm{km})\).*
+**CRPA**
+- Phased array, **2 elements**, linear, **0.5 λ** spacing @ 1.57542 GHz; back-lobe suppression 20 dB; element factor enabled.
+- **Beamformer:** MVDR with **+3 dB** constraint in the look direction.
+- **Null Direction Provider:** *Object → Jammer* (automatic adaptive null).
+- **Beam Direction Provider:** *Automatic* (main lobe tracks active GNSS SVs).
 
-*(optional)*  
-`![JSR vs Range](figs/jsr_vs_range.png)`
+<p align="center">
+  <img src="media/aircraft_scene.png" width="95%"/><br/>
+  <em>Aircraft with adaptive CRPA pattern (illustrative)</em>
+</p>
+
+<a id="jam-sec"></a>
+## Jammer Models
+
+**Baseline — Al Ain Tower rooftop (urban)**
+- Frequency: GPS L1 (1.57542 GHz) wideband noise.
+- Power: **5 W** (37 dBm); antenna: vertical dipole (~**+2 dBi**).  
+  EIRP ≈ **39 dBm**.
+
+**Stress case**
+- Power: **20 W** (**43 dBm**) with a **10 dBi panel** aimed along the route.  
+  EIRP ≈ **53 dBm**.
+
+> First-order sanity for J/S:
+>
+> \[
+> J\!/\!S\_\text{dB} \approx \text{EIRP}\_{J} - L\_{FS}(d) + G\_{Rx}(\theta,\phi) - P\_{Sig,Rx}
+> \]
+> The simulation uses full geometry, time-varying gains, and platform motion.
+
+<a id="flight-sec"></a>
+## Flight Profile
+- Platform: “Basic Airliner.”
+- Altitude: **10 kft MSL** (terminal/loiter representative).
+- Track: arcs over an **AreaTarget** to sweep jammer bearings/elevations.
+
+<p align="center">
+  <img src="media/route.png" width="95%"/><br/>
+  <em>Loitering track across the Abu Dhabi AreaTarget</em>
+</p>
+
+<p align="center">
+  <img src="media/access_times.png" width="95%"/><br/>
+  <em>Access timeline to GPS blocks and to the Jammer</em>
+</p>
+
+<a id="method-sec"></a>
+## Data Products & Method
+- **Navigation Accuracy FOM** rendered once to visually confirm realism.
+- **C/N₀ vs. time** per SV exported; **median** per-SV used for headline plots.  
+  (Minima are tracked during design but dominated by short, intentional CRPA nulls.)
+- **Receiver Gain vs. time** used to validate null/steer dynamics.
+
+<p align="center">
+  <img src="media/rcvr_gain_timeseries.png" width="95%"/><br/>
+  <em>Receiver gain dynamics — short, deep nulls when the adaptive null crosses a satellite DOA</em>
+</p>
 
 ---
 
-<a id="results"></a>
+<a id="results-sec"></a>
 ## Results
 
-### What to look at
-* **Median C/N₀ and C/(N+I) per satellite** (robust to brief adaptive nulls).  
-* **Rx gain vs. time** shows CRPA main-lobe and narrow adaptive nulls toward the jammer.  
-* **Min C/N₀** is shown only for stress awareness (over-emphasizes short nulls), so the headline comparisons are based on **medians**.
+<a id="navacc-sec"></a>
+### Navigation Accuracy (visual check)
+<p align="center">
+  <img src="media/nav_accuracy.png" width="95%"/><br/>
+  <em>Navigation accuracy FOM over the route (no jammer overlays)</em>
+</p>
 
-### Headline Findings (typical run)
-* With FRPA, median per-satellite **C/N₀ ≈ 33–45 dB-Hz** under 20 W/10 dBi stress.
-* With CRPA (4-el, MVDR), medians improve to **~40–56 dB-Hz**, maintaining tracking margin.
-* Adaptive nulls are **brief and narrow**; navigation continuity is preserved while close to the jammer.
+<a id="res-frpa-5w"></a>
+### Median C/N₀ — FRPA, 5 W jammer
+<p align="center">
+  <img src="media/cn0_frpa_5w_median.png" width="95%"/><br/>
+  <em>Single-element u-blox ANN-MB under 5 W rooftop interference</em>
+</p>
 
-*(drop your actual images here)*  
-`![Median C/N0 FRPA vs CRPA](figs/median_cn_compare.png)`  
-`![Min C/N0 (awareness)](figs/min_cn_compare.png)`  
-`![Rx Gain Traces](figs/rx_gain_traces.png)`
+**Observation:** Median C/N₀ dips into the **low-30s dB-Hz** for several SVs when geometry tightens range to the tower; still generally trackable but with reduced margin.
 
----
+<a id="res-crpa-5w"></a>
+### Median C/N₀ — CRPA, 5 W jammer
+<p align="center">
+  <img src="media/cn0_crpa_5w_median.png" width="95%"/><br/>
+  <em>2-element MVDR CRPA with adaptive null on the jammer</em>
+</p>
 
-<a id="how-to-reproduce-stk"></a>
-## How to Reproduce (STK)
+**Observation:** Median C/N₀ **recovers vs. FRPA**; adaptive null removes most jammer power while the main lobe tracks SVs.
 
-1. **Objects**
-   - *Constellations*: GPS IIF/III/IIR/IIRM transmitters.
-   - *Aircraft*: 10 kft MSL route over Area Target.
-   - *Jammer*: Facility on rooftop; Transmitter → Complex Model (20 W), Antenna → Panel 10 dBi.
+<a id="res-frpa-stress"></a>
+### Median C/N₀ — FRPA, 20 W + 10 dBi panel (stress)
+<p align="center">
+  <img src="media/cn0_frpa_20w_panel10_median.png" width="95%"/><br/>
+  <em>Stress: 20 W + 10 dBi panel, FRPA receiver</em>
+</p>
 
-2. **CommSystem**
-   - *Link Definition*: Constraining **Receive**; Selection **Max Elevation**.
-   - *Interference*: Assign **Jammer** constellation.
-   - *Receiver (FRPA run)*: Complex Receiver → Antenna **Patch** / FRPA equivalent.
-   - *Receiver (CRPA run)*:
-     - Antenna → **Phased Array** → 4 elements, **circular**, **0.5 λ** spacing.
-     - **Beam Direction Provider**: Automatic (strongest satellite).
-     - **Null Direction Provider**: Object → **Jammer**.
-     - **Beam Former**: **MVDR**, constraint **3 dB**.
+**Observation:** FRPA shows **severe** degradation near panel boresight; margins frequently insufficient.
 
-3. **Reports/Graphs**
-   - *Per-satellite* **C/N₀** and **C/(N+I)**.
-   - Receiver **Gain** vs. time.
-   - Export CSV → plot medians in Python/Matlab.
+<a id="res-crpa-stress"></a>
+### Median C/N₀ — CRPA, 20 W + 10 dBi panel (stress)
+<p align="center">
+  <img src="media/cn0_crpa_20w_panel10_median.png" width="95%"/><br/>
+  <em>Stress: 20 W + 10 dBi panel, MVDR CRPA</em>
+</p>
 
----
-
-<a id="assumptions--notes"></a>
-## Assumptions & Notes
-* Rx noise temperature nominal **290 K** (hot case sensitivity can be swept).
-* GPS EIRP per block uses conservative (minimum) values from open literature.
-* Polarization mismatch (panel vs RHCP) and off-boresight losses are handled by STK’s antenna models.
-* Medians are used for headline comparisons; mins are provided for stress awareness only.
+**Observation:** CRPA preserves **meaningfully higher** median C/N₀ than FRPA under identical stress, demonstrating practical anti-jamming value for airborne platforms over Abu Dhabi.
 
 ---
 
-<a id="repository-structure"></a>
-## Repository Structure
+<a id="repro-sec"></a>
+## How to Reproduce
+1. Import live GPS ephemeris **.txt**, sort by SVN/block, propagate.
+2. **Receivers**  
+   • FRPA: configure noise/gain per u-blox ANN-MB specs.  
+   • CRPA: 2-el, 0.5 λ, MVDR (+3 dB), Null→Jammer, Beam→Automatic.
+3. **Jammers**  
+   • Baseline: **5 W** dipole on Al Ain Tower.  
+   • Stress: **20 W + 10 dBi** panel aimed at the route.
+4. Fly the **10 kft** loiter track over the AreaTarget.
+5. Export C/N₀ time series; compute **median** per SV; render the plots.
+
+<a id="layout-sec"></a>
+## Repo Layout
