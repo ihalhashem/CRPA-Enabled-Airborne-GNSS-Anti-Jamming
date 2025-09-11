@@ -25,11 +25,11 @@
 ## Scenario Setup
 
 **Constellations**
-- GPS IIR / IIR-M / IIF / III satellites imported from live ephemeris **.txt** and grouped by block; propagated over the test window.
+- GPS IIR / IIR-M / IIF / III satellites imported from [live ephemeris **.txt**](https://celestrak.org/NORAD/elements/gp.php?GROUP=gps-ops&FORMAT=tle) and grouped by block; propagated over the test window.
 
 
 <p align="center">
-  <img src="media/constellations.png" width="95%" /><br/>
+  <img src="Media/constellations.png" width="95%" /><br/>
   <em>Resulting orbital planes around Earth</em>
 </p>
 
