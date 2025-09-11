@@ -116,7 +116,7 @@
 ## Flight Profile
 - Platform: “Basic Airliner.”
 - Altitude: **10 kft MSL** (terminal/loiter representative).
-- Track: arcs over an **AreaTarget** to sweep jammer bearings/elevations.
+- Track: Searches an **AreaTarget** to sweep jammer bearings/elevations.
 
 <p align="center">
   <img src="media/AER.png" width="100%"/><br/>
@@ -124,7 +124,7 @@
 </p>
 
 <p align="center">
-  <img src="media/access.png" width="100%"/><br/>
+  <img src="media/Access.png" width="100%"/><br/>
   <em>Satellites access to the aircraft</em>
 </p>
 
