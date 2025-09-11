@@ -8,8 +8,6 @@
 ## Table&nbsp;of&nbsp;Contents
 * [Overview](#Overview)
 * [Scenario Setup](#setup-sec)
-* [Receiver Models](#rx-sec)
-* [Jammer Models](#jam-sec)
 * [Flight Profile](#flight-sec)
 * [Data Products & Method](#method-sec)
 * [Results](#results-sec)
@@ -26,11 +24,11 @@
 ## Overview
 
 <p align="center">
-  <video src="Media/overview.mp4" width="95%" controls loop muted playsinline>
+  <video src="Media/Overview.mp4" width="95%" controls loop muted playsinline>
     Your browser does not support the video tag. 
     You can <a href="Media/overview.mp4">download the MP4 here</a>.
   </video><br/>
-  <em>The Scene .</em>
+  <em>The Scene.</em>
 </p>
 
 <a id="setup-sec"></a>
@@ -45,55 +43,74 @@
   <em>Resulting orbital planes around Earth and a sample satellite</em>
 </p>
 
-<a id="rx-sec"></a>
-## Receiver Models
 
-**FRPA (baseline) — u-blox ANN-MB active patch (L1)**
-- Element: RHCP patch, typ. **+3.5 dBic** zenith gain.
-- Integrated LNA chain: total gain ~**21.4 dB**, NF ~**2.8 dB**.
-- Cable insertion loss (RG-174, 5 m) ≈ **6.6 dB**.
-- System noise temps set to **290 K**; rain model enabled for 0.1% outage.
-- Implemented in STK “Complex Receiver Model” to mimic the datasheet chain.
+### Receiver Configurations
 
-<p align="center">
-  <img src="Media/rx_ann-mb_setup.png" width="95%"/><br/>
-  <em>Receiver noise / gain chain implemented to mimic u-blox ANN-MB</em>
-</p>
+#### Baseline FRPA — [u-blox ANN-MB](https://www.u-blox.com/en/product/ann-mb-series)
 
-<p align="center">
-  <img src="Media/ublox_annmb_specs.png" width="95%"/><br/>
-  <em>Excerpted ANN-MB element & amplifier specifications</em>
-</p>
+| Parameter             | Value / Setting                                                                 |
+|-----------------------|----------------------------------------------------------------------------------|
+| Frequency             | GPS L1 (1.57542 GHz)                                                             |
+| Element               | RHCP patch (datasheet typ. **+3.5 dBic** at zenith)                             |
+| LNA Chain (datasheet) | Total gain **≈ 21.4 dB**; Noise figure **≈ 2.8 dB**                             |
+| Cable Insertion Loss  | RG-174, 5 m **≈ 6.6 dB**                                                         |
 
-**CRPA**
-- Phased array, **2 elements**, linear, **0.5 λ** spacing @ 1.57542 GHz; back-lobe suppression 20 dB; element factor enabled.
-- **Beamformer:** MVDR with **+3 dB** constraint in the look direction.
-- **Null Direction Provider:** *Object → Jammer* (automatic adaptive null).
-- **Beam Direction Provider:** *Automatic* (main lobe tracks active GNSS SVs).
+#### CRPA (2-Element)
 
-<p align="center">
-  <img src="media/aircraft_scene.png" width="95%"/><br/>
-  <em>Aircraft with adaptive CRPA pattern (illustrative)</em>
-</p>
+| Parameter              | Value / Setting                                                                 |
+|------------------------|----------------------------------------------------------------------------------|
+| Frequency              | GPS L1 (1.57542 GHz)                                                             |
+| Geometry               | **2 elements**, linear, **0.5 λ** spacing                                        |
+| Element Factor         | Enabled; back-lobe suppression **20 dB**                                         |
+| Beamformer             | **MVDR**, constraint **+3 dB** toward look direction                             |
+| Beam Direction| **Automatic** (main lobe tracks active GNSS SVs)                                |
+| Null Direction | **Jammer** (adaptive null steering)                                     |
+| Receiver Chain         | Same noise/gain configuration as FRPA                   |
 
-<a id="jam-sec"></a>
-## Jammer Models
 
-**Baseline — Al Ain Tower rooftop (urban)**
-- Frequency: GPS L1 (1.57542 GHz) wideband noise.
-- Power: **5 W** (37 dBm); antenna: vertical dipole (~**+2 dBi**).  
-  EIRP ≈ **39 dBm**.
+#### Baseline Jammer — Al Ain Tower Rooftop
 
-**Stress case**
-- Power: **20 W** (**43 dBm**) with a **10 dBi panel** aimed along the route.  
-  EIRP ≈ **53 dBm**.
+| Parameter              | Value / Setting                                                  |
+|------------------------|------------------------------------------------------------------|
+| Frequency              | 1.57542 GHz (GPS L1)                                            |
+| Location / Height      | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** (~180–200 m AGL) |
+| Transmit Power         | **5 W** (**37 dBm = 7 dBW**)                                    |
+| Antenna                | Vertical dipole, **~2 dBi**                                     |
+| Feed / Cable Loss      | **~0.5 dB**                                                     |
+| **EIRP**               | **~8.5 dBW** (7 dBW + 2 dBi − 0.5 dB)                           |
+| Polarization           | **Linear** (≈3 dB mismatch vs RHCP GNSS)                        |
+| Spectrum               | **Gaussian noise**, **5 MHz** centered at L1                    |
+| Pointing               | Omni (dipole)                                                   |
 
-> First-order sanity for J/S:
->
-> \[
-> J\!/\!S\_\text{dB} \approx \text{EIRP}\_{J} - L\_{FS}(d) + G\_{Rx}(\theta,\phi) - P\_{Sig,Rx}
-> \]
-> The simulation uses full geometry, time-varying gains, and platform motion.
+---
+
+#### Stress Jammer — 20 W + 10 dBi Panel
+
+| Parameter              | Value / Setting                                                  |
+|------------------------|------------------------------------------------------------------|
+| Frequency              | 1.57542 GHz (GPS L1)                                            |
+| Location / Height      | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories**           |
+| Transmit Power         | **20 W** (**43 dBm = 13 dBW**)                                  |
+| Antenna                | **Panel 10 dBi** (fixed broadside toward route)                 |
+| Feed / Cable Loss      | **~1.0 dB**                                                     |
+| **EIRP**               | **~23 dBW** (13 dBW + 10 dBi − 1 dB)                            |
+| Polarization           | **Linear** (RHCP optional for worst-case)                       |
+| Spectrum               | **Gaussian noise**, **5 MHz** centered at L1                    |
+| Pointing               | tracks the aircraft                   |
+
+---
+
+#### GPS Space Transmitters (by Block)
+
+| Parameter                          | **IIR**                 | **IIR-M**               | **IIF**                | **III**               |
+|------------------------------------|-------------------------|-------------------------|------------------------|-----------------------|
+| Signal / Frequency                 | L1 C/A @ **1575.42 MHz** | L1 C/A @ **1575.42 MHz** | L1 C/A @ **1575.42 MHz** | L1 C/A @ **1575.42 MHz** |
+| Satellite Antenna Gain (boresight) | **11.7 dBic**           | **12.25 dBic**          | **13.0 dBic**          | **13.0 dBic**         |
+| Transmitter Power | **14.3 dBW**            | **14.75 dBW**           | **15.0 dBW**           | **17.0 dBW**          |
+| Resulting EIRP (boresight)     | **26 dBW**              | **27 dBW**              | **28 dBW**             | **30 dBW**            |
+| Polarization                       | RHCP                    | RHCP                    | RHCP                   | RHCP                  |
+
+
 
 <a id="flight-sec"></a>
 ## Flight Profile
@@ -102,13 +119,13 @@
 - Track: arcs over an **AreaTarget** to sweep jammer bearings/elevations.
 
 <p align="center">
-  <img src="media/route.png" width="95%"/><br/>
-  <em>Loitering track across the Abu Dhabi AreaTarget</em>
+  <img src="media/AER.png" width="100%"/><br/>
+  <em>AER</em>
 </p>
 
 <p align="center">
-  <img src="media/access_times.png" width="95%"/><br/>
-  <em>Access timeline to GPS blocks and to the Jammer</em>
+  <img src="media/access.png" width="100%"/><br/>
+  <em>Satellites access to the aircraft</em>
 </p>
 
 <a id="method-sec"></a>
