@@ -19,9 +19,9 @@
 ## Overview
 
 <p align="center">
-  <video src="Media/Overview.mp4" width="95%" controls loop muted playsinline>
+  <video src="media/Overview.mp4" width="95%" controls loop muted playsinline>
     Your browser does not support the video tag. 
-    You can <a href="Media/overview.mp4">download the MP4 here</a>.
+    You can <a href="media/overview.mp4">download the MP4 here</a>.
   </video><br/>
   <em>The Scene.</em>
 </p>
@@ -142,7 +142,7 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 | ------------------------------------------- | -------------------- | -------------------: | ----------------------: | ------------------------------------------------------------------------------ |
 | **Commercial rooftop (omni, L1)**           | **FRPA**             |             **8.21** |             6.48 / 8.37 | Clear ~8 dB-Hz median hit per SV. Several SVs ride near the 35 dB-Hz line.    |
 | **Commercial rooftop (omni, L1)**           | **2-el CRPA (MVDR)** |             **0.38** |             0.03 / 0.58 | Jam impact nearly washed out; medians essentially unchanged.                   |
-| **Directional stress (20 W, 10 dBi panel)** | **FRPA**             |            **23.89** |           21.89 / 25.17 | Heavy degradation (~24 dB-Hz). Many SV medians near/below robust threshold.   |
+| **Directional stress (20 W, 10 dBi panel)** | **FRPA**             |            **23.89** |           21.89 / 25.17 | Heavy degradation (~24 dB-Hz). ALL SVs medians near/below robust threshold.   |
 | **Directional stress (20 W, 10 dBi panel)** | **2-el CRPA (MVDR)** |             **4.09** |             0.72 / 5.24 | Strong mitigation; kept every SV that was above 35 dB-Hz above the same threshold. |
 
 *Takeaway:* CRPA consistently reduces median loss versus FRPA in both the commercial and stress scenarios, keeping more satellites above the ~35 dB-Hz line even under directional high-power jamming.
