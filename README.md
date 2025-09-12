@@ -19,12 +19,17 @@
 ## Overview
 
 <p align="center">
-  <video src="media/Overview.mp4" width="95%" controls loop muted playsinline>
-    Your browser does not support the video tag. 
-    You can <a href="media/overview.mp4">download the MP4 here</a>.
-  </video><br/>
-  <em>The Scene.</em>
+  <video src="Media/Overview.mp4" width="95%" controls loop muted playsinline>
+    Your browser does not support the video tag.
+  </video>
 </p>
+
+<p align="center">
+  <a href="media/Overview.mp4">
+    <img src="media/overview_thumb.png" width="95%" alt="Overview video (click to play)"/>
+  </a>
+</p>
+
 
 <a id="setup-sec"></a>
 ## Scenario Setup
