@@ -16,19 +16,11 @@
   * [Median C/N₀ — CRPA, 20 W + 10 dBi panel](#res-crpa-stress)
 
 <a id="Overview"></a>
-## Overview
+## Overview and Demo
 
-<p align="center">
-  <video src="Media/Overview.mp4" width="95%" controls loop muted playsinline>
-    Your browser does not support the video tag.
-  </video>
-</p>
+[![CRPA anti-jam demo — Abu Dhabi](media/overview_thumb.png)](https://youtu.be/AzkSSaRnXH8 "Watch on YouTube")
 
-<p align="center">
-  <a href="media/Overview.mp4">
-    <img src="media/overview_thumb.png" width="95%" alt="Overview video (click to play)"/>
-  </a>
-</p>
+*Click the image to watch the full demo on YouTube.*
 
 
 <a id="setup-sec"></a>
