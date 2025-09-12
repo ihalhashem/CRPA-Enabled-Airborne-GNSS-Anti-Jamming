@@ -6,7 +6,7 @@
 </p>
 
 ## Table&nbsp;of&nbsp;Contents
-* [Overview](#Overview)
+* [Overview and Demo](#Overview)
 * [Scenario Setup](#setup-sec)
 * [Flight Profile](#flight-sec)
 * [Results](#results-sec)
@@ -14,6 +14,7 @@
   * [Median C/N₀ — CRPA, 5 W](#res-crpa-5w)
   * [Median C/N₀ — FRPA, 20 W + 10 dBi panel](#res-frpa-stress)
   * [Median C/N₀ — CRPA, 20 W + 10 dBi panel](#res-crpa-stress)
+  * [CRPA JSR Suppression vs Datasheet](#jsr-sec)
 
 <a id="Overview"></a>
 ## Overview and Demo
@@ -21,7 +22,6 @@
 [![CRPA anti-jam demo — Abu Dhabi](media/overview_thumb.png)](https://youtu.be/AzkSSaRnXH8 "Watch on YouTube")
 
 *Click the image to watch the full demo on YouTube.*
-
 
 <a id="setup-sec"></a>
 ## Scenario Setup
@@ -61,8 +61,6 @@
 | Polarization | **Linear** (≈3 dB mismatch vs RHCP GNSS) | **Linear** (RHCP optional for worst-case) |
 | Spectrum | **Gaussian noise**, **5 MHz** centered at L1 | **Gaussian noise**, **5 MHz** centered at L1 |
 | Pointing | Omni (dipole) | Tracks the aircraft |
-
-
 
 #### GPS Space Transmitters (by Block)
 
@@ -142,4 +140,19 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 | **Directional stress (20 W, 10 dBi panel)** | **FRPA**             |            **23.89** |           21.89 / 25.17 | Heavy degradation (~24 dB-Hz). ALL SVs medians near/below robust threshold.   |
 | **Directional stress (20 W, 10 dBi panel)** | **2-el CRPA (MVDR)** |             **4.09** |             0.72 / 5.24 | Strong mitigation; kept every SV that was above 35 dB-Hz above the same threshold. |
 
-*Takeaway:* CRPA consistently reduces median loss versus FRPA in both the commercial and stress scenarios, keeping more satellites above the ~35 dB-Hz line even under directional high-power jamming.
+*Takeaway:* CRPA consistently reduces median loss versus FRPA in both the commercial and stress scenarios, keeping more satellites above the ~35 dB-Hz line even under directional high-power jamming.  
+*Note:* In several epochs the CRPA places a deep **null toward the jammer**, which coincides with the directions of **IIF5** and **IIRM** satellites at times—hence their brief dips.
+
+---
+
+<a id="jsr-sec"></a>
+## CRPA JSR Suppression (vs Datasheet)
+
+<p align="center">
+  <img src="media/JSRSuppression.png" width="100%"/><br/>
+  <em>Antenna discrimination \(D = G_\mathrm{SV} - G_\mathrm{jam}\) (dB) per satellite, median over time. Dashed line: nominal **&gt;40 dB** wideband suppression from vendor datasheet.</em>
+</p>
+
+- **What this is:** \(D\) is the beamformer’s **JSR suppression** (null depth) between the CRPA look to a tracked satellite and the jammer DOA, computed from STK **Rcvr Gain (dB)** time histories.  
+- **How to read it:** JSR\(_\text{out}\) ≈ JSR\(_\text{in}\) − \(D\). Values clustering near or above ~40 dB indicate datasheet-class performance. Transient negative bars usually reflect short **null crossings** of satellite DOA during maneuvers.
+- **Reference:** [TUALCOM ANTY (2-array CRPA) datasheet — Nominal wideband suppression &gt; 40 dB](https://www.tualcom.com/wp-content/uploads/2023/09/tualcom-anty.pdf).
