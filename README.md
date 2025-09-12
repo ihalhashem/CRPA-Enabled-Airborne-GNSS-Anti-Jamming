@@ -1,4 +1,4 @@
-<img width="1672" height="673" alt="image" src="https://github.com/user-attachments/assets/6846200a-e2a4-4087-bcaf-8dbb66837dec" /># CRPA-Enabled Airborne GNSS Anti-Jamming
+# CRPA-Enabled Airborne GNSS Anti-Jamming
 
 ## Introduction
 <p align="justify">
