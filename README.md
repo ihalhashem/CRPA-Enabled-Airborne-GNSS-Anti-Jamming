@@ -146,13 +146,13 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 ---
 
 <a id="jsr-sec"></a>
-## CRPA JSR Suppression (vs Datasheet)
+## CRPA JSR Suppression 
 
 <p align="center">
   <img src="media/JSRSuppression.png" width="100%"/><br/>
-  <em>Antenna discrimination \(D = G_\mathrm{SV} - G_\mathrm{jam}\) (dB) per satellite, median over time. Dashed line: nominal **&gt;40 dB** wideband suppression from vendor datasheet.</em>
+  <em>Antenna discrimination <code>D = G_sv − G_jam</code> (dB) per satellite, median over time. Dashed line: nominal <strong>&gt;40 dB</strong> wideband suppression from vendor datasheet.</em>
 </p>
 
-- **What this is:** \(D\) is the beamformer’s **JSR suppression** (null depth) between the CRPA look to a tracked satellite and the jammer DOA, computed from STK **Rcvr Gain (dB)** time histories.  
-- **How to read it:** JSR\(_\text{out}\) ≈ JSR\(_\text{in}\) − \(D\). Values clustering near or above ~40 dB indicate datasheet-class performance. Transient negative bars usually reflect short **null crossings** of satellite DOA during maneuvers.
-- **Reference:** [TUALCOM ANTY (2-array CRPA) datasheet — Nominal wideband suppression &gt; 40 dB](https://www.tualcom.com/wp-content/uploads/2023/09/tualcom-anty.pdf).
+- **What this is:** `D` is the beamformer’s **JSR suppression** (null depth) between the CRPA look to a tracked satellite and the jammer DOA, computed from STK **Rcvr Gain (dB)** time histories.  
+- **How to read it:** `JSR_out ≈ JSR_in − D`. Bars near or above ~**40 dB** indicate datasheet-class performance. Small negative bars reflect short **null crossings** of a satellite DOA during maneuvers.  
+- **Benchmark:** [TUALCOM ANTY datasheet (>40 dB)](https://www.tualcom.com/wp-content/uploads/2023/09/tualcom-anty.pdf)
