@@ -76,7 +76,7 @@
 
 <a id="flight-sec"></a>
 ## Flight Profile
-- Platform: “Basic Airliner.”
+- Platform: Commercial Airliner.
 - Altitude: **10 kft MSL** (terminal/loiter representative).
 - Track: Searches an **AreaTarget** to sweep jammer bearings/elevations.
 
