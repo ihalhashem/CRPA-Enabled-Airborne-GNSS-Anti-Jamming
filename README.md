@@ -145,50 +145,28 @@
 <a id="results-sec"></a>
 ## Results
 
-<a id="navacc-sec"></a>
-### Navigation Accuracy (visual check)
-<p align="center">
-  <img src="media/nav_accuracy.png" width="95%"/><br/>
-  <em>Navigation accuracy FOM over the route (no jammer overlays)</em>
-</p>
+The plots below show per-satellite **median** C/(N+I), C/N, and the **median loss** (ΔC/N₀ = C/N − C/(N+I)) with the 35 dB-Hz “robust GPS L1 C/A operation” reference shown as a dashed line.
 
-<a id="res-frpa-5w"></a>
-### Median C/N₀ — FRPA, 5 W jammer
-<p align="center">
-  <img src="media/cn0_frpa_5w_median.png" width="95%"/><br/>
-  <em>Single-element u-blox ANN-MB under 5 W rooftop interference</em>
-</p>
+### Commercial Rooftop Jammer (Baseline Case)
 
-**Observation:** Median C/N₀ dips into the **low-30s dB-Hz** for several SVs when geometry tightens range to the tower; still generally trackable but with reduced margin.
+| FRPA (single-element) | CRPA (2-element MVDR) |
+|---|---|
+| <img src="Median/CommercialFRPA.png" width="100%"/> | <img src="Median/CommercialCRPA.png" width="100%"/> |
 
-<a id="res-crpa-5w"></a>
-### Median C/N₀ — CRPA, 5 W jammer
-<p align="center">
-  <img src="media/cn0_crpa_5w_median.png" width="95%"/><br/>
-  <em>2-element MVDR CRPA with adaptive null on the jammer</em>
-</p>
+### Directional Jammer — Stress Test (20 W, 10 dBi panel)
 
-**Observation:** Median C/N₀ **recovers vs. FRPA**; adaptive null removes most jammer power while the main lobe tracks SVs.
+| FRPA (single-element) | CRPA (2-element MVDR) |
+|---|---|
+| <img src="Median/StressFRPA.png" width="100%"/> | <img src="Median/StressCRPA.png" width="100%"/> |
 
-<a id="res-frpa-stress"></a>
-### Median C/N₀ — FRPA, 20 W + 10 dBi panel (stress)
-<p align="center">
-  <img src="media/cn0_frpa_20w_panel10_median.png" width="95%"/><br/>
-  <em>Stress: 20 W + 10 dBi panel, FRPA receiver</em>
-</p>
+**Reading the plots**
+- **Blue**: Median C/(N+I) with interference present.  
+- **Orange**: Median C/N with no interference.  
+- **Green**: Median **ΔC/N₀** (jam-imposed degradation).  
+- **Dashed line**: ~35 dB-Hz comfort threshold for robust L1 C/A operation.
 
-**Observation:** FRPA shows **severe** degradation near panel boresight; margins frequently insufficient.
+*Takeaway:* CRPA consistently reduces median loss versus FRPA in both the commercial and stress scenarios, keeping more satellites above the ~35 dB-Hz line even under directional jamming.
 
-<a id="res-crpa-stress"></a>
-### Median C/N₀ — CRPA, 20 W + 10 dBi panel (stress)
-<p align="center">
-  <img src="media/cn0_crpa_20w_panel10_median.png" width="95%"/><br/>
-  <em>Stress: 20 W + 10 dBi panel, MVDR CRPA</em>
-</p>
-
-**Observation:** CRPA preserves **meaningfully higher** median C/N₀ than FRPA under identical stress, demonstrating practical anti-jamming value for airborne platforms over Abu Dhabi.
-
----
 
 <a id="repro-sec"></a>
 ## How to Reproduce
