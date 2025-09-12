@@ -151,13 +151,13 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 
 | FRPA (single-element) | CRPA (2-element MVDR) |
 |---|---|
-| <img src="Media/CommercialFRPA.png" width="100%"/> | <img src="Media/CommercialCRPA.png" width="100%"/> |
+| <img src="media/CommercialFRPA.png" width="100%"/> | <img src="media/CommercialCRPA.png" width="100%"/> |
 
 ### Directional Jammer — Stress Test (20 W, 10 dBi panel)
 
 | FRPA (single-element) | CRPA (2-element MVDR) |
 |---|---|
-| <img src="Media/StressFRPA.png" width="100%"/> | <img src="Media/StressCRPA.png" width="100%"/> |
+| <img src="media/StressFRPA.png" width="100%"/> | <img src="media/StressCRPA.png" width="100%"/> |
 
 **Reading the plots**
 - **Blue**: Median C/(N+I) with interference present.  
