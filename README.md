@@ -99,7 +99,7 @@
 <a id="results-sec"></a>
 ## Results
 
-The plots below show per-satellite **median** C/(N+I), C/N, and the **median loss** (ΔC/N₀ = C/N − C/(N+I)), with the dashed line marking the ~**35 dB-Hz** “robust GPS L1 C/A operation” reference.
+The plots below show per-satellite **median** C/(N+I), C/N, and the **median loss** (ΔC/N₀ = C/N − C/(N+I)), with the dashed line marking the ~**35 dB-Hz** “robust GPS L1 C/A operation”[Wieser, 2006: conventional receivers acquire/track above ~33–35 dB-Hz](https://w.fig.net/resources/proceedings/2006/baden_2006_comm6/PDF/GPS2/Wieser.pdf).
 
 <a id="res-frpa-5w"></a>
 ### Commercial Rooftop Jammer (Baseline Case)
