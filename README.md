@@ -78,7 +78,10 @@
 - Platform: Commercial Airliner.
 - Altitude: **10 kft MSL** (terminal/loiter representative).
 - Track: Searches an **AreaTarget** to sweep jammer bearings/elevations.
-- Enviroment: ITU-R P.618/P.840/P.676 propagation models.
+- **Environment:** ITU-R propagation models at L1 (1.575 GHz)  
+  - [P.618](https://www.itu.int/rec/R-REC-P.618/en) — Earth–space path prediction (rain, scintillation, clouds/gases aggregation)  
+  - [P.840](https://www.itu.int/rec/R-REC-P.840/en) — Cloud & fog attenuation  
+  - [P.676](https://www.itu.int/rec/R-REC-P.676/en) — Atmospheric gases (O₂, H₂O) attenuation  
 
 <p align="center">
   <img src="media/Track.png" width="100%"/><br/>
