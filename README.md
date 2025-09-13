@@ -52,15 +52,14 @@
 
 ### Jammers
 
-| **Parameter** | **Baseline Jammer — Al Ain Tower Rooftop** | **Stress Jammer — 20 W + 10 dBi Panel** |
+| **Parameter** | **Baseline Jammer * | **Stress Jammer** |
 |---|---|---|
 | Frequency | 1.57542 GHz (GPS L1) | 1.57542 GHz (GPS L1) |
-| Location / Height | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** (~180–200 m AGL) | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** |
+| Location / Height | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** |
 | Transmit Power | **5 W** (**37 dBm = 7 dBW**) | **20 W** (**43 dBm = 13 dBW**) |
 | Antenna | Vertical dipole, **~2 dBi** | **Panel 10 dBi** (broadside to route; antenna tracker) |
-| Feed / Cable Loss | **~0.5 dB** | **~1.0 dB** |
-| **EIRP** | **~8.5 dBW** (7 dBW + 2 dBi − 0.5 dB) | **~23 dBW** (13 dBW + 10 dBi − 1 dB) |
-| Polarization | **Linear** (≈3 dB mismatch vs RHCP GNSS) | **Linear** (RHCP optional for worst-case) |
+| **EIRP** | **~9 dBW**  | **~24 dBW** |
+| Polarization | **Linear** (≈3 dB mismatch vs RHCP GNSS) | **Linear** |
 | Spectrum | **Gaussian noise**, **5 MHz** centered at L1 | **Gaussian noise**, **5 MHz** centered at L1 |
 | Pointing | Omni (dipole) | Tracks the aircraft |
 
@@ -79,6 +78,11 @@
 - Platform: Commercial Airliner.
 - Altitude: **10 kft MSL** (terminal/loiter representative).
 - Track: Searches an **AreaTarget** to sweep jammer bearings/elevations.
+
+<p align="center">
+  <img src="media/Track.png" width="100%"/><br/>
+  <em>Track</em>
+</p>
 
 <p align="center">
   <img src="media/AER.png" width="100%"/><br/>
@@ -143,7 +147,7 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 | **Directional stress (20 W, 10 dBi panel)** | **2-el CRPA (MVDR)** |             **4.09** |             0.72 / 5.24 | Strong mitigation; kept every SV that was above 35 dB-Hz above the same threshold. |
 
 *Takeaway:* CRPA consistently reduces median loss versus FRPA in both the commercial and stress scenarios, keeping more satellites above the ~35 dB-Hz line even under directional high-power jamming.  
-*Note:* In several epochs the CRPA places a deep **null toward the jammer**, which coincides with the directions of **IIF5** and **IIRM** satellites at times—hence their brief dips.
+*Note:* In several epochs the CRPA places a deep **null toward the jammer**, which coincides with the directions of **IIF5** and **IIRM** satellites at times—hence their dips.
 
 ---
 
