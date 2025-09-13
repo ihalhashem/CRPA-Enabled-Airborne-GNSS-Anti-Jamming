@@ -5,8 +5,8 @@
 <b>Airborne GNSS robustness study built in STK.</b> A civil airliner flies a low-altitude (10 kft MSL) route over <b>Abu Dhabi</b> while a commercial rooftop jammer on <b>Al Ain Tower</b> radiates at GPS L1. I compare a conventional single-element FRPA against a compact 2-element CRPA (MVDR beamformer) and quantify the effect on received <b>C/N₀</b> and <b>C/(N+I)</b>. The primary stress case uses a <b>20 W</b> jammer with a <b>10 dBi</b> panel mounted on an antenna tracker.
 </p>
 
-## Table&nbsp;of&nbsp;Contents
-* [Overview and Demo](#Overview)
+## Table of Contents
+* [Overview](#Overview)
 * [Scenario Setup](#setup-sec)
 * [Flight Profile](#flight-sec)
 * [Results](#results-sec)
@@ -14,7 +14,9 @@
   * [Median C/N₀ — CRPA, 5 W](#res-crpa-5w)
   * [Median C/N₀ — FRPA, 20 W + 10 dBi panel](#res-frpa-stress)
   * [Median C/N₀ — CRPA, 20 W + 10 dBi panel](#res-crpa-stress)
-  * [CRPA JSR Suppression vs Datasheet](#jsr-sec)
+* [CRPA JSR Suppression](#jsr-sec)
+* [Contact / Data Access](#contact-sec)
+
 
 <a id="Overview"></a>
 ## Overview and Demo
@@ -146,13 +148,21 @@ The plots below show per-satellite **median** C/(N+I), C/N, and the **median los
 ---
 
 <a id="jsr-sec"></a>
-## CRPA JSR Suppression (vs Datasheet)
+## CRPA JSR Suppression 
 
 <p align="center">
   <img src="media/JSRSuppression.png" width="100%"/><br/>
-  <em>Antenna discrimination \(D = G_\mathrm{SV} - G_\mathrm{jam}\) (dB) per satellite, median over time. Dashed line: nominal **&gt;40 dB** wideband suppression from vendor datasheet.</em>
+  <em>Antenna discrimination <code>D = G_sv − G_jam</code> (dB) per satellite, median over time. Dashed line: nominal <strong>&gt;40 dB</strong> wideband suppression from vendor datasheet.</em>
 </p>
 
-- **What this is:** \(D\) is the beamformer’s **JSR suppression** (null depth) between the CRPA look to a tracked satellite and the jammer DOA, computed from STK **Rcvr Gain (dB)** time histories.  
-- **How to read it:** JSR\(_\text{out}\) ≈ JSR\(_\text{in}\) − \(D\). Values clustering near or above ~40 dB indicate datasheet-class performance. Transient negative bars usually reflect short **null crossings** of satellite DOA during maneuvers.
-- **Reference:** [TUALCOM ANTY (2-array CRPA) datasheet — Nominal wideband suppression &gt; 40 dB](https://www.tualcom.com/wp-content/uploads/2023/09/tualcom-anty.pdf).
+- **What this is:** `D` is the beamformer’s **JSR suppression** (null depth) between the CRPA look to a tracked satellite and the jammer DOA, computed from STK **Rcvr Gain (dB)** time histories.  
+- **How to read it:** `JSR_out ≈ JSR_in − D`. Bars near or above ~**40 dB** indicate datasheet-class performance. Small negative bars reflect short **null crossings** of a satellite DOA during maneuvers.  
+- **Benchmark:** [TUALCOM ANTY datasheet (>40 dB)](https://www.tualcom.com/wp-content/uploads/2023/09/tualcom-anty.pdf)
+
+
+<a id="contact-sec"></a>
+## Contact / Data Access
+
+Simulation files are **available upon request**.  
+Email: **rawashdeh758@gmail.com**.
+
