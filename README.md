@@ -78,6 +78,7 @@
 - Platform: Commercial Airliner.
 - Altitude: **10 kft MSL** (terminal/loiter representative).
 - Track: Searches an **AreaTarget** to sweep jammer bearings/elevations.
+- Enviroment: ITU-R P.618/P.840/P.676 propagation models.
 
 <p align="center">
   <img src="media/Track.png" width="100%"/><br/>
