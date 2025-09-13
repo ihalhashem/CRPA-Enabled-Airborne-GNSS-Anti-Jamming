@@ -52,7 +52,7 @@
 
 ### Jammers
 
-| **Parameter** | **Baseline Jammer * | **Stress Jammer** |
+| **Parameter** | **Baseline Jammer** | **Stress Jammer** |
 |---|---|---|
 | Frequency | 1.57542 GHz (GPS L1) | 1.57542 GHz (GPS L1) |
 | Location / Height | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** | Abu Dhabi, **Al Ain Tower rooftop**, ≈ **47 stories** |
